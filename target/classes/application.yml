@@ -1,0 +1,10 @@
+application:
+    message: hello world 1
+spring:
+  freemarker:
+    template-loader-path: /freemarker/
+    settings:
+      datetime_format: yyyy-MM-dd HH:mm:ss
+      time_format:  HH:mm:ss
+      date_format: yyyy/MM/dd
+    request-context-attribute: rc

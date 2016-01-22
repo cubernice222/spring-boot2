@@ -1,0 +1,7 @@
+if you want package Servlet 2.5 war
+   you can C the docment on this link
+   http://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#howto-create-a-deployable-war-file
+if you want package Servlet 3 above
+ just
+   public class Application extends SpringBootServletInitializer implements WebApplicationInitializer
+ will do the all the work
