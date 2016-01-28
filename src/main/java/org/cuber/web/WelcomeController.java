@@ -2,6 +2,7 @@ package org.cuber.web;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,6 +36,11 @@ public class WelcomeController {
         model.put("error", false);
         HttpSession session=request.getSession();
         session.setAttribute("login", "123");
+        return "login";
+    }
+    @RequestMapping("/loginfailed.htm")
+    public String loginfailed(ModelMap model){
+        model.addAttribute("error", true);
         return "login";
     }
 }

@@ -8,3 +8,6 @@ spring:
       time_format:  HH:mm:ss
       date_format: yyyy/MM/dd
     request-context-attribute: rc
+
+logging:
+  config: classpath:logback.xml

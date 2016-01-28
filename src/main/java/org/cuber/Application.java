@@ -11,13 +11,14 @@ import java.util.Arrays;
  */
 @SpringBootApplication
 public class Application {
+
     public static void main(String[] args){
         ApplicationContext ctx = SpringApplication.run(Application.class,args);
         System.out.println("let's inspect the beans provided by spring boot");
         String[] beanNames  = ctx.getBeanDefinitionNames();
         Arrays.sort(beanNames);
         for(String beanName :beanNames){
-           Object obj =  ctx.getBean(beanName);
+            Object obj =  ctx.getBean(beanName);
             System.out.println(beanName + ":" + obj.getClass());
         }
     }

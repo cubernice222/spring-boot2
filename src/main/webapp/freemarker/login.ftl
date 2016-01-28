@@ -27,7 +27,7 @@
             <div class="errorblock">
                 <p>Your login attempt was not successful.</p>
 
-                <p> Cause: ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</p>
+                <p> Cause: ${Session.SPRING_SECURITY_LAST_EXCEPTION.message}</p>
             </div>
         </#if>
         <#if  msg??>
@@ -40,13 +40,13 @@
                 <h3 class="panel-title">Login</h3>
             </div>
             <div class="panel-body">
-                <form style="margin: 20px;" class="form-horizontal" role="form" action="j_spring_security_check"
+                <form style="margin: 20px;"th:action="@{/login}"  class="form-horizontal" role="form" action="/login"
                       method="post">
                     <div class="form-group">
                         <label for="j_username" class="col-sm-2 control-label">User</label>
 
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="j_username" name="j_username" required
+                            <input type="text" class="form-control" id="username" name="username" required
                                    placeholder="User Name" autofocus>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                         <label for="j_password" class="col-sm-2 control-label">Password</label>
 
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="j_password" name="j_password"
+                            <input type="password" class="form-control" id="password" name="password"
                                    placeholder="Password" required>
                         </div>
                     </div>

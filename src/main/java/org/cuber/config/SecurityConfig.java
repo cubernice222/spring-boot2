@@ -18,17 +18,28 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfig  extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/login.htm").permitAll().anyRequest().fullyAuthenticated().and()
-                .authorizeRequests().antMatchers("/error").permitAll().anyRequest().fullyAuthenticated().and()
-                .authorizeRequests().antMatchers("/resources/**").permitAll().anyRequest().fullyAuthenticated().and()
-                .authorizeRequests().antMatchers("/userRegistration.htm/**").permitAll().anyRequest().fullyAuthenticated().and()
-                .authorizeRequests().antMatchers("/test.htm/**").permitAll().anyRequest().fullyAuthenticated().and()
-                .authorizeRequests().antMatchers("/admin.htm").access("hasRole('ROLE_admin')").and()
-                .formLogin().loginPage("/login.htm");
+        http.authorizeRequests().antMatchers("/login.htm").anonymous().and()
+                .authorizeRequests().antMatchers("/error").anonymous().and()
+                .authorizeRequests().antMatchers("/resources/**").anonymous().and()
+                .authorizeRequests().antMatchers("/userRegistration.htm/**").anonymous().and()
+                .authorizeRequests().antMatchers("/test.htm/**").anonymous().and()
+                .authorizeRequests().antMatchers("/admin.htm").hasRole("ADMIN").and()
+                .formLogin()
+                    .loginPage("/login.htm")
+                    .loginProcessingUrl("/login")  //very import add
+                    .failureUrl("/loginfailed.htm");
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("cuber").password("cuber").roles("admin");
+        auth
+                .ldapAuthentication()
+                .userSearchBase("ou=people").userSearchFilter("uid={0}")
+                .groupSearchBase("ou=roles")
+                .contextSource()
+                .url("ldap://127.0.0.1:389/dc=cucumber,dc=com")
+                .managerDn("cn=manager,dc=cucumber,dc=com")
+                .managerPassword("secret");
+
     }
 }
