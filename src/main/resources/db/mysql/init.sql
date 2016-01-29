@@ -1,0 +1,11 @@
+create table If NOT EXISTS SINGLE_MESSAGE(
+    ID varchar(255),
+    MESSAGE varchar(255),
+    primary key (ID)
+);
+create table if not EXISTS IDENTITY_STRATAGY(
+  INSTANCE_NAME varchar(255),
+  LAST_UPDATE_TIME TIMESTAMP,
+  LAST_UPDATE_VALUE INTEGER,
+  PRIMARY  key(INSTANCE_NAME)
+);

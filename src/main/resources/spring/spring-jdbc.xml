@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+                 http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig"
+        p:driverClassName="${mysql.driverName}"
+        p:username="${mysql.userName}"
+        p:password="${mysql.password}"
+        p:minimumIdle="${mysql.minIdle}"
+        p:maximumPoolSize="${mysql.maxSize}"
+        p:jdbcUrl="${mysql.jdbcUrl}"/>
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" c:configuration-ref="hikariConfig"/>
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+        p:dataSource-ref="dataSource"/>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"
+        p:basePackage="org.cuber.database.mapper"/>
+    <jdbc:initialize-database data-source="dataSource">
+        <jdbc:script location="classpath:db/mysql/init.sql"/>
+    </jdbc:initialize-database>
+    <!-- 为什么要配置成注解类事物，因为事物支持的类型非常多，而事物的支持取决于业务，我觉得应该有程序员去决定事物-->
+    <tx:annotation-driven transaction-manager="transactionManager" />
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" p:dataSource-ref="dataSource"/>
+</beans>
