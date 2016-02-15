@@ -40,6 +40,5 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .url("ldap://127.0.0.1:389/dc=cucumber,dc=com")
                 .managerDn("cn=manager,dc=cucumber,dc=com")
                 .managerPassword("secret");
-
     }
 }

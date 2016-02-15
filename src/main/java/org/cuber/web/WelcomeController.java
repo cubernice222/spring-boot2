@@ -26,7 +26,8 @@ public class WelcomeController {
     @RequestMapping("/welcome.htm")
     public String welcome(Map<String, Object> model){
         model.put("time", new Date());
-        model.put("message", this.message);
+        String message = service.getId("SINGLE_MESSAGE");
+        model.put("message", message);
         return "welcome";
     }
 
