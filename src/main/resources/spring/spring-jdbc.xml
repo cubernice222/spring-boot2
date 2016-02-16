@@ -17,7 +17,8 @@
         p:jdbcUrl="${mysql.jdbcUrl}"/>
     <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" c:configuration-ref="hikariConfig"/>
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
-        p:dataSource-ref="dataSource"/>
+        p:dataSource-ref="dataSource"
+        p:mapperLocations="classpath*:mybatis/mapper/**/*Mapper.xml"/>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"
         p:basePackage="org.cuber.database.mapper"/>
     <jdbc:initialize-database data-source="dataSource">

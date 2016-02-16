@@ -1,5 +1,7 @@
 package org.cuber.config;
 
+import org.cuber.service.MybatisDBService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
@@ -16,6 +18,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @AutoConfigureBefore(SecurityAutoConfiguration.class)
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfig  extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private MybatisDBService service;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/login.htm").anonymous().and()

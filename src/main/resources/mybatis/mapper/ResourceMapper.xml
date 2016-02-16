@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.cuber.database.mapper.ResourceMapper">
+    <resultMap id="Resource" type="org.cuber.database.entity.Resource">
+        <id property="id" column="id" />
+        <result property="resourceName" column="resourceName" />
+        <result property="resourceType" column="resourceType" />
+        <result property="resource" column="resource" />
+        <collection property="roles" javaType="list" ofType="string">
+            <result column="role"/>
+        </collection>
+    </resultMap>
+    <select id="getAllResources" resultMap="Resource">
+    SELECT a.*,b.role_id as role FROM resources a, roles_resources b WHERE a.id = b.resource_id
+</select>
+</mapper>
