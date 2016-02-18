@@ -7,9 +7,11 @@ import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
 /**
  * Created by cuber on 2016/1/22.
@@ -20,10 +22,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private MybatisDBService service;
+    private InvocationSecurityMetadataSourceService metaDataSource;
+    @Autowired
+    private MyAccessDecisionManager accessDecisionManager;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http.authorizeRequests().antMatchers("/login.htm").anonymous().and()
                 .authorizeRequests().antMatchers("/error").anonymous().and()
                 .authorizeRequests().antMatchers("/resources/**").anonymous().and()
@@ -34,6 +39,16 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                     .loginPage("/login.htm")
                     .loginProcessingUrl("/login")  //very import add
                     .failureUrl("/loginfailed.htm");
+        http.authorizeRequests().anyRequest().authenticated().withObjectPostProcessor(
+                new ObjectPostProcessor<FilterSecurityInterceptor>(){
+                    @Override
+                    public <O extends FilterSecurityInterceptor> O postProcess(O object) {
+                        object.setSecurityMetadataSource(metaDataSource);
+                        object.setAccessDecisionManager(accessDecisionManager);
+                        return object;
+                    }
+                }
+        );
     }
 
     @Override
@@ -47,4 +62,6 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .managerDn("cn=manager,dc=cucumber,dc=com")
                 .managerPassword("secret");
     }
+
+
 }

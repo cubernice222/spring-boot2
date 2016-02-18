@@ -35,6 +35,16 @@ public class WelcomeController {
         return "welcome";
     }
 
+    @RequestMapping("/autopage.htm")
+    public String autopage(Map<String, Object> model){
+        model.put("time", new Date());
+        String message = service.getId("SINGLE_MESSAGE");
+        List<Resource> resources = service.getAllResource();
+        System.out.println(resources);
+        model.put("message", message);
+        return "welcome";
+    }
+
     @RequestMapping("/admin.htm")
     public String admin(Map<String, Object> model){
         model.put("time", service.getTime());
