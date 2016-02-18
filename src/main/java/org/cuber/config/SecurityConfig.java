@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 /**
  * Created by cuber on 2016/1/22.
@@ -18,6 +19,7 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 @Configuration
 @AutoConfigureBefore(SecurityAutoConfiguration.class)
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+@EnableRedisHttpSession
 public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -38,6 +40,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                     .loginPage("/login.htm")
                     .loginProcessingUrl("/login")  //very import add
                     .failureUrl("/loginfailed.htm");
+
         http.authorizeRequests().anyRequest().authenticated().withObjectPostProcessor(
                 new ObjectPostProcessor<FilterSecurityInterceptor>(){
                     @Override

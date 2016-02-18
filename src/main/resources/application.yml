@@ -8,6 +8,8 @@ spring:
       time_format:  HH:mm:ss
       date_format: yyyy/MM/dd
     request-context-attribute: rc
+  redis:
+    host: 192.168.13.39
 
 logging:
   config: classpath:logback.xml
