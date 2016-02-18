@@ -1,6 +1,5 @@
 package org.cuber.config;
 
-import org.cuber.service.MybatisDBService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
